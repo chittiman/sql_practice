@@ -1,2 +1,2 @@
 # sql_practice
-sql practice problems
+sql practice problems from strata
