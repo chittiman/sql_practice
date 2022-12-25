@@ -1,0 +1,51 @@
+Submission Types
+
+Write a query that returns the user ID of all users that have created 
+at least one ‘Refinance’ submission and at least one ‘InSchool’ submission.
+
+loans
+
+id:int
+user_id:int
+created_at:datetime
+status:varchar
+type:varchar
+
+Thinking:
+Mistake made  - Did where type in (Refinance, Inschool) but that returns the user ID
+of all users that have created at least one ‘Refinance’ submission and at least 
+one ‘InSchool’ submission.
+
+So, Used intersection method
+
+My Solution:
+select 
+    user_id 
+from loans 
+    where type = 'Refinance'
+intersect
+select 
+    user_id 
+from loans 
+    where type = 'InSchool'
+
+Failed attempt with Case - Tried creating truth columns for both Inschool and Refinance
+and tried to take and statement. But this will always return false
+
+Other solutions
+
+select  user_id
+from loans
+where type = 'Refinance' or type = 'InSchool'
+group by 1
+having count(distinct type) = 2
+
+Grouping and counting distinct types
+
+
+select user_id from loans
+group by 1
+having 
+    count(case when type = 'Refinance' then type end)>=1 and 
+    count(case when type = 'InSchool' then type end)>=1
+
